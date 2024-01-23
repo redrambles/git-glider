@@ -33,6 +33,9 @@ else
   exit 1
 fi
 
+# Get the current shell
+shell=$(basename "$SHELL")
+
 # Determine the correct shell configuration file
 if [ "$shell" = "zsh" ]; then
   config_file=~/.zshrc
@@ -56,11 +59,11 @@ if ! grep -q ". ~/text-styles.sh" "$config_file"; then
 fi
 
 # Source the shell configuration file
-# if [ "$shell" = "zsh" ]; then
-#   exec zsh
-# elif [ "$shell" = "bash" ]; then
-#   . "$config_file"
-# fi
+if [ "$shell" = "zsh" ]; then
+  exec zsh
+elif [ "$shell" = "bash" ]; then
+  . "$config_file"
+fi
 
 . $config_file
 
