@@ -14,7 +14,7 @@ alias undo="git reset HEAD~"
 
 gcmsgn() {
   if [ "$1" == "--help" ]; then
-    colorPrint brightCyan "Usage: gcmsgn <message>"
+    colorPrint brightCyan "Usage: gcmsgn <optional-message>"
     colorPrint brightCyan "Performs a git commit with the provided message and --no-verify option."
     return
   fi
@@ -78,7 +78,8 @@ openpr() {
 
 function squashRange {
     if [ "$1" == "--help" ]; then
-      colorPrint brightCyan "Usage: squashRange <hashA> <hashB> <message>"
+      colorPrint brightCyan "Usage: squashRange <hashA> <hashB> <optional-message>"
+      colorPrint yellow "<hashA> has to be older than <hashB>"
       colorPrint brightCyan "Squashes a range of commits between <hashA> and <hashB> into a single commit with a new commit message."
       return
     fi
@@ -121,7 +122,7 @@ function squashRange {
 
 function squashLast {
     if [ "$1" == "--help" ]; then
-      colorPrint brightCyan "Usage: squashLast <num_commits> <message>"
+      colorPrint brightCyan "Usage: squashLast <num_commits> <optional-message>"
       colorPrint brightCyan "Squashes the last <num_commits> into a single commit with a new commit message."
       return
     fi
@@ -149,10 +150,55 @@ function squashLast {
 }
 
 git-glider() {
-  if [ "$1" == "--help" ]; then
-    colorPrint brightCyan "Usage: git-glider <command> [--help]"
-    colorPrint brightCyan "Available commands:"
-    colorPrint brightCyan "gup, gcmsg, ga, gst, gups, undo, gcmsgn, pushs, rebaseLast, resetLast, openpr, squashRange, squashLast"
-    return
+  if [ -z "$1" ] || [ "$1" == "--help" ]; then
+    colorPrint brightCyan "git-glider: A collection of bash commands to streamline your Git workflow and maintain a clean, understandable Git history."
+    
+    if [ "$1" == "--help" ]; then
+      colorPrint brightCyan "Aliases:"
+      colorPrint brightCyan "gup:"
+      colorPrint cyan "Performs a git pull --rebase."
+      colorPrint brightCyan "gcmsg:"
+      colorPrint cyan "Performs a git commit -m."
+      colorPrint brightCyan "ga:"
+      colorPrint cyan "Performs a git add."
+      colorPrint brightCyan "gst:"
+      colorPrint cyan "Performs a git status."
+      colorPrint brightCyan "gups:"
+      colorPrint cyan "Performs a git pull origin main --rebase."
+      colorPrint brightCyan "undo:"
+      colorPrint cyan "Undoes the last commit and leaves the changes in the working area."
+
+      colorPrint brightCyan "Functions:"
+      colorPrint brightCyan "gcmsgn:"
+      colorPrint cyan "Performs a git commit -m with --no-verify option."
+      colorPrint cyan "Usage: gcmsgn \"Your commit message\""
+
+      colorPrint brightCyan "pushs:"
+      colorPrint cyan "Pushes the current branch to the origin with --force-with-lease."
+      colorPrint cyan "Usage: pushs"
+
+      colorPrint brightCyan "rebaseLast:"
+      colorPrint cyan "Starts an interactive rebase of the last num_commits commits."
+      colorPrint cyan "Usage: rebaseLast <num_commits>"
+
+      colorPrint brightCyan "resetLast:"
+      colorPrint cyan "Undoes the last num_commits commits and leaves the changes in the staging area."
+      colorPrint cyan "Usage: resetLast <num_commits>"
+
+      colorPrint brightCyan "openpr:"
+      colorPrint cyan "Opens the browser to compare the current branch to the main branch."
+      colorPrint cyan "Usage: openpr"
+
+      colorPrint brightCyan "squashRange:"
+      colorPrint cyan "Squashes a range of commits between hashA and hashB into a single commit with a new commit message."
+      colorPrint cyan "⚠️ hashA has to be older than hashB"
+      colorPrint cyan "Usage: squashRange <hashA> <hashB> \"optional new commit message\""
+
+      colorPrint brightCyan "squashLast:"
+      colorPrint cyan "Squashes the last num_commits into a single commit with a new commit message."
+      colorPrint cyan "Usage: squashLast <num_commits> \"optional new commit message\""
+    fi
+  else
+    colorPrint brightRed "Invalid argument. Use git-glider or git-glider --help."
   fi
 }

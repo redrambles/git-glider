@@ -56,8 +56,16 @@ or with fetch
   openpr
   ```
 
-- squashRange: Squashes a range of commits between `hashA` and `hashB` into a single commit with a new commit message.
+- squashRange: Squashes a range of commits between `hashA` and `hashB` into a single commit with a new commit message. 
 
-```bash
-squashRange <hashA> <hashB> "Your new commit message"
-```
+  ⚠️ hashA has to be older than hashB
+
+  ```bash
+  squashRange <hashA> <hashB> "optional new commit message"
+  ```
+
+- squashLast: Squashes the last `num_commits` into a single commit with a new commit message.
+
+  ```bash
+  squashLast <num_commits> "optional new commit message"
+  ```
