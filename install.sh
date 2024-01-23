@@ -51,20 +51,19 @@ fi
 colorPrint brightCyan "$shell $(colorPrint blue 'detected, modifying') $(colorPrint brightCyan $config_file)"
 
 # Add a line to source the script files, if it's not already there
-if ! grep -q ". ~/git-commands.sh" "$config_file"; then
+if ! grep -q "\. ~/git-commands.sh" "$config_file"; then
   echo ". ~/git-commands.sh" >> "$config_file"
 fi
-if ! grep -q ". ~/text-styles.sh" "$config_file"; then
+if ! grep -q "\. ~/text-styles.sh" "$config_file"; then
   echo ". ~/text-styles.sh" >> "$config_file"
 fi
 
-# Source the shell configuration file
-if [ "$shell" = "zsh" ]; then
-  exec zsh
-elif [ "$shell" = "bash" ]; then
-  . "$config_file"
-fi
-
-. $config_file
-
-colorPrint brightGreen "✅ Git Glider has been installed successfully!"
+echo
+colorPrint green "Git Glider has been installed successfully!  ✅"
+colorPrint green "New terminal windows will now have access to it."
+echo
+colorPrint green "If you want to start using it straight away, please run the following command to start using Git Glider:"
+colorPrint brightGreen ". ~/text-styles.sh && . ~/git-commands.sh"
+echo 
+echo 
+colorPrint white "This project loves Oh My Zsh, a delightful community-driven framework for managing your Zsh configuration. Some of the aliases used in this project are defined in Oh My Zsh. If you haven't installed it yet, we highly recommend checking it out to enhance your terminal experience. Visit https://ohmyz.sh to learn more. ❤️"

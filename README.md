@@ -5,13 +5,15 @@ A collection of bash commands to streamline your Git workflow and maintain a cle
 ## Getting started
 
 Install with curl
-`bash <(curl -fsSL https://raw.githubusercontent.com/krystalcampioni/git-glider/main/install.sh)`
 
-Or with wget
-`bash <(wget -qO - https://raw.githubusercontent.com/krystalcampioni/git-glider/main/install.sh)`
+```sh
+sh -c "$(curl -fsSL "https://raw.githubusercontent.com/krystalcampioni/git-glider/main/install.sh?$(date +%s)")"`
+```
+or
 
-or with fetch
-`bash <(fetch -qo - https://raw.githubusercontent.com/krystalcampioni/git-glider/main/install.sh)`
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/krystalcampioni/git-glider/main/install.sh)
+```
 
 ## Commands and Aliases
 
