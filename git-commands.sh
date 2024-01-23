@@ -13,37 +13,48 @@ alias undo="git reset HEAD~"
 
 
 gcmsgn() {
+  if [ "$1" == "--help" ]; then
+    colorPrint brightCyan "Usage: gcmsgn <message>"
+    colorPrint brightCyan "Performs a git commit with the provided message and --no-verify option."
+    return
+  fi
   gcmsg "$1" --no-verify
 }
 
-# Tested and works ✅
-# git push origin <current_branch> --force-with-lease
 pushs() {
+  if [ "$1" == "--help" ]; then
+    colorPrint brightCyan "Usage: pushs"
+    colorPrint brightCyan "Pushes the current branch to the origin with --force-with-lease option."
+    return
+  fi
   branch=$(git branch --show-current)
   git push origin $branch --force-with-lease
 }
 
-
-# Tested and works ✅
-# rebaseLast <num_commits>
-# starts interactive rebase of last <num_commits> commits
-# todo implement --help with instructions
 rebaseLast() {
+  if [ "$1" == "--help" ]; then
+    colorPrint brightCyan "Usage: rebaseLast <num_commits>"
+    colorPrint brightCyan "Starts an interactive rebase of the last <num_commits> commits."
+    return
+  fi
   git rebase -i HEAD~$1
 }
 
-# Tested and works ✅
-# resetLast <num_commits>
-# undoes last <num_commits> commits
-# leaves changes of last <num_commits> commits in staging
-# todo implement --help with instructions
 resetLast() {
+  if [ "$1" == "--help" ]; then
+    colorPrint brightCyan "Usage: resetLast <num_commits>"
+    colorPrint brightCyan "Undoes the last <num_commits> commits and leaves the changes in the staging area."
+    return
+  fi
   git reset --soft HEAD~$1
 }
 
-# Tested and works ✅
-# opens browser to compare current branch to main
 openpr() {
+  if [ "$1" == "--help" ]; then
+    colorPrint brightCyan "Usage: openpr"
+    colorPrint brightCyan "Opens the browser to compare the current branch to the main branch."
+    return
+  fi
   repo=$(git config --get remote.origin.url | sed -e 's/^git@.*:\(.*\)\.git$/\1/' -e 's/^https:\/\/github.com\/\(.*\)\.git$/\1/')
   echo $repo
   branch=$(git branch --show-current)
@@ -65,12 +76,12 @@ openpr() {
   fi
 }
 
-# Tested and works ✅
-# squashRange <hashA> <hashB> <message>
-# hashA has to be older than hashB
-# todo implement --help with instructions
-
 function squashRange {
+    if [ "$1" == "--help" ]; then
+      colorPrint brightCyan "Usage: squashRange <hashA> <hashB> <message>"
+      colorPrint brightCyan "Squashes a range of commits between <hashA> and <hashB> into a single commit with a new commit message."
+      return
+    fi
     local hashA="$1"
     local hashB="$2"
     local message="$3"
@@ -108,12 +119,12 @@ function squashRange {
     git branch -D mod_history
 }
 
-
-
-# Tested and works ✅
-# squashLast <num_commits> <message>
-# todo implement --help with instructions
 function squashLast {
+    if [ "$1" == "--help" ]; then
+      colorPrint brightCyan "Usage: squashLast <num_commits> <message>"
+      colorPrint brightCyan "Squashes the last <num_commits> into a single commit with a new commit message."
+      return
+    fi
     local num_commits="$1"
     local message="$2"
 
@@ -135,4 +146,13 @@ function squashLast {
 
     # Remove the temporary script
     rm /tmp/editor.sh
+}
+
+git-glider() {
+  if [ "$1" == "--help" ]; then
+    colorPrint brightCyan "Usage: git-glider <command> [--help]"
+    colorPrint brightCyan "Available commands:"
+    colorPrint brightCyan "gup, gcmsg, ga, gst, gups, undo, gcmsgn, pushs, rebaseLast, resetLast, openpr, squashRange, squashLast"
+    return
+  fi
 }
