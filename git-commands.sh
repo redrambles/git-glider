@@ -54,16 +54,16 @@ rebaseLast() {
   git rebase -i HEAD~$1
 }
 
-resetLast() {
+undoLast() {
   if [ "$1" = "--help" ]; then
     echo
     colorPrint brightCyan "Usage: " -n
-    colorPrint brightWhite "resetLast <num_commits>"
+    colorPrint brightWhite "undoLast <num_commits>"
     colorPrint cyan "Undoes the last <num_commits> commits and leaves the changes in the staging area."
     echo
     return
   fi
-  git reset --soft HEAD~$1
+  git reset HEAD~$1
 }
 
 openpr() {
@@ -209,9 +209,9 @@ gitGlider() {
     colorPrint cyan "Starts an interactive rebase of the last num_commits commits."
     colorPrint cyan "Usage: rebaseLast <num_commits>"
     echo
-    colorPrint brightCyan "resetLast:"
+    colorPrint brightCyan "undoLast:"
     colorPrint cyan "Undoes the last num_commits commits and leaves the changes in the staging area."
-    colorPrint cyan "Usage: resetLast <num_commits>"
+    colorPrint cyan "Usage: undoLast <num_commits>"
     echo
     colorPrint brightCyan "openpr:"
     colorPrint cyan "Opens the browser to compare the current branch to the main branch."

@@ -9,22 +9,32 @@ Install with curl
 ```sh
 sh -c "$(curl -fsSL "https://raw.githubusercontent.com/krystalcampioni/git-glider/main/install.sh?$(date +%s)")"`
 ```
+
 or
 
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/krystalcampioni/git-glider/main/install.sh)
 ```
 
+run `gitGlider --help` for a full list of commands and aliases
+
 ## Commands and Aliases
 
 ### Aliases
 
-- `gup`: Performs a `git pull --rebase`.
-- `gcmsg`: Performs a `git commit -m`.
-- `ga`: Performs a `git add`.
-- `gst`: Performs a `git status`.
-- `gups`: Performs a `git pull origin main --rebase`.
+- `gup`: `git pull --rebase`.
+- `gcmsg`: `git commit -m`.
+- `ga`: `git add`.
+- `gst`: `git status`.
+- `gups`: `git pull origin main --rebase`.
+- `logp`: `git log -p`
+- `glog`: `git log --oneline --decorate --graph`
+- `gst`: `git status`
+- `gclean`: `git clean -f -d`
+- `rewordLast`: `git commit --amend --message`
+- `gups`: `git pull origin main --rebase`
 - `undo`: Undoes the last commit and leaves the changes in the working area.
+- `addToLast n`: `git add . && git commit --amend --no-edit`  Undoes the last N commit and leaves the changes in the working area.
 
 ### Functions
 
@@ -46,10 +56,10 @@ bash <(curl -fsSL https://raw.githubusercontent.com/krystalcampioni/git-glider/m
   rebaseLast <num_commits>
   ```
 
-- resetLast: Undoes the last `num_commits`` commits and leaves the changes in the staging area.
+- undoLast: Undoes the last `num_commits`` commits and leaves the changes in the staging area.
 
   ```bash
-  resetLast <num_commits>
+  undoLast <num_commits>
   ```
 
 - openpr: Opens the browser to compare the current branch to the main branch
@@ -71,3 +81,12 @@ bash <(curl -fsSL https://raw.githubusercontent.com/krystalcampioni/git-glider/m
   ```bash
   squashLast <num_commits> "optional new commit message"
   ```
+
+## Contributing
+
+Contributions are welcome!
+💪 If you have a command or alias that has improved your Git workflow, please consider sharing it with the community.
+
+## Perfect pairing 🍷
+
+This project loves Oh My Zsh, a delightful community-driven framework for managing your Zsh configuration. Some of the aliases used in this project are defined in Oh My Zsh. If you haven't installed it yet, we highly recommend checking it out to enhance your terminal experience. Visit https://ohmyz.sh to learn more. ❤️
