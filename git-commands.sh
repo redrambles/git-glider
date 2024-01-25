@@ -14,6 +14,7 @@ alias gups="git pull origin main --rebase"
 
 alias undo="git reset HEAD~" # leaves changes of last commit in working area
 alias addToLast="git add . && git commit --amend --no-edit"
+alias gclean="git clean -f -d"
 
 gcmsgn() {
   if [ "$1" = "--help" ]; then
