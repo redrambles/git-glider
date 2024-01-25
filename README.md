@@ -18,7 +18,72 @@ bash <(curl -fsSL https://raw.githubusercontent.com/krystalcampioni/git-glider/m
 
 run `gitGlider --help` for a full list of commands and aliases
 
-## Commands and Aliases
+## Functions and Aliases
+
+### Functions
+
+#### gcmsgn
+
+`git commit -m --no-verify`
+
+runs git commit skipping pre-commit checks
+
+  ```bash
+  gcmsgn "Your commit message"
+  ```
+  
+
+#### pushs
+
+Pushes the current branch to the origin with `--force-with-lease`
+
+  ```bash
+  pushs
+  ```
+
+#### rebaseLast
+
+Starts an interactive rebase of the last `num_commits` commits.
+
+  ```bash
+  rebaseLast 4
+  ```
+
+#### undoLast
+
+Undoes the last `num_commits` commits and leaves the changes in the staging area.
+
+  ```bash
+  undoLast 3
+  ```
+
+
+#### openpr
+
+ Opens the browser to compare the current branch to the main branch on Github
+
+  ```bash
+  openpr
+  ```
+
+#### squashRange
+
+Squashes a range of commits between `hashA` and `hashB` into a single commit with a new commit message.
+
+  > ⚠️ hashA has to be older than hashB
+
+  ```bash
+  squashRange <hashA> <hashB> "optional new commit message"
+  ```
+
+#### squashLast
+
+Squashes the last `num_commits` into a single commit with a new commit message.
+
+  ```bash
+  squashLast 2 "optional new commit message"
+  ```
+
 
 ### Aliases
 
@@ -89,69 +154,6 @@ Performs a `git add . && git commit --amend --no-edit`
 
 Stages all changes and ads them to the most recent commit without changing the commit message.
 
-### Functions
-
-#### gcmsgn
-
-`git commit -m --no-verify`
-
-runs git commit skipping pre-commit checks
-
-  ```bash
-  gcmsgn "Your commit message"
-  ```
-  
-
-#### pushs
-
-Pushes the current branch to the origin with `--force-with-lease`
-
-  ```bash
-  pushs
-  ```
-
-#### rebaseLast
-
-Starts an interactive rebase of the last `num_commits` commits.
-
-  ```bash
-  rebaseLast 4
-  ```
-
-#### undoLast
-
-Undoes the last `num_commits` commits and leaves the changes in the staging area.
-
-  ```bash
-  undoLast 3
-  ```
-
-
-#### openpr
-
- Opens the browser to compare the current branch to the main branch on Github
-
-  ```bash
-  openpr
-  ```
-
-#### squashRange
-
-Squashes a range of commits between `hashA` and `hashB` into a single commit with a new commit message.
-
-  > ⚠️ hashA has to be older than hashB
-
-  ```bash
-  squashRange <hashA> <hashB> "optional new commit message"
-  ```
-
-#### squashLast
-
-Squashes the last `num_commits` into a single commit with a new commit message.
-
-  ```bash
-  squashLast 2 "optional new commit message"
-  ```
 
 ## Contributing
 
