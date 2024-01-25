@@ -6,11 +6,14 @@ alias gup="git pull --rebase"
 alias gcmsg="git commit -m"
 alias ga="git add"
 alias logp="git log -p"
+alias logp="git log -p"
+alias glog="git log --oneline --decorate --graph"
 alias gst="git status"
 alias gups="git pull origin main --rebase"
 
-# leaves changes of last commit in working area
-alias undo="git reset HEAD~"
+
+alias undo="git reset HEAD~" # leaves changes of last commit in working area
+alias addToLast="git add . && git commit --amend --no-edit"
 
 gcmsgn() {
   if [ "$1" = "--help" ]; then
