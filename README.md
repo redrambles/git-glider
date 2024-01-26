@@ -154,6 +154,12 @@ Performs a `git add . && git commit --amend --no-edit`
 
 Stages all changes and ads them to the most recent commit without changing the commit message.
 
+##### backUpBranch
+
+Performs the equivalent of `git checkout -b <current-branch-name>_backup && git checkout -`
+
+Creates a backup of your current branch without leaving your current branch
+
 
 ## Contributing
 

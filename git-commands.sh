@@ -11,7 +11,7 @@ alias glog="git log --oneline"
 alias lograph="git log --all --decorate --oneline --graph"
 alias gst="git status"
 alias gups="git pull origin main --rebase"
-
+alias bkup="backupBranch"
 
 alias undo="git reset HEAD~" # leaves changes of last commit in working area
 alias addToLast="git add . && git commit --amend --no-edit"
@@ -172,6 +172,19 @@ squashLast() {
     rm /tmp/editor.sh
 }
 
+backupBranch() {
+    # Get the current branch name
+    local currentBranch=$(git rev-parse --abbrev-ref HEAD)
+
+    # Create a new branch with '_backup' appended to the current branch name
+    git checkout -b "${currentBranch}_backup"
+
+    # Switch back to the original branch
+    git checkout "$currentBranch"
+
+    colorPrint green  "Created a backup branch: ${currentBranch}_backup ✅"
+}
+
 
 gitGlider() {
   if [ -z "$1" ]; then
@@ -230,6 +243,10 @@ gitGlider() {
     colorPrint brightCyan "squashLast:"
     colorPrint cyan "Squashes the last num_commits into a single commit with a new commit message."
     colorPrint cyan "Usage: squashLast <num_commits> \"optional new commit message\""
+    echo
+    colorPrint brightCyan "backupBranch:"
+    colorPrint cyan "Duplicates your current branch appenging _backup to its name."
+    colorPrint cyan "Usage: backupBranch"
     echo
   else
     echo
