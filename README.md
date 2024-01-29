@@ -168,7 +168,21 @@ Saves changes to the stash with a name.
 stashByName <stash_name> <optional --iu or --include-untracked>
 ```
 
+#### applyStash
 
+Applied the stash by its saved name.
+
+```sh
+applyStash <stash_name>
+``` 
+
+#### popStash
+
+Pops the stash by its saved name.
+
+```sh
+popStash <stash_name>
+```
 ## Contributing
 
 Contributions are welcome!

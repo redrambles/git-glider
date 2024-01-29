@@ -197,6 +197,16 @@ function stashByName {
     fi
 }
 
+function applyStash {
+    local stash_name="$1"
+    git stash apply "stash^{/$stash_name}"
+}
+
+function popStash {
+    local stash_name="$1"
+    git stash pop "stash^{/$stash_name}"
+}
+
 
 gitGlider() {
   if [ -z "$1" ]; then
@@ -263,6 +273,14 @@ gitGlider() {
     colorPrint brightCyan "stashByName:"
     colorPrint cyan "Saves changes to the stash with a name."
     colorPrint cyan "Usage: stashByName <stash_name> <optional --iu or --include-untracked>"
+    echo
+    colorPrint brightCyan "applyStash:"
+    colorPrint cyan "Applied the stash by its saved name."
+    colorPrint cyan "Usage: applyStash <stash_name>"
+    echo
+    colorPrint brightCyan "popStash:"
+    colorPrint cyan "Pops the stash by its saved name."
+    colorPrint cyan "Usage: popStash <stash_name>"
     echo
   else
     echo
