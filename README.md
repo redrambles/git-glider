@@ -160,6 +160,14 @@ Performs the equivalent of `git checkout -b <current-branch-name>_backup && git 
 
 Creates a backup of your current branch without leaving your current branch
 
+##### stashByName
+
+Saves changes to the stash with a name.
+
+```sh
+stashByName <stash_name> <optional --iu or --include-untracked>
+```
+
 
 ## Contributing
 

@@ -12,6 +12,7 @@ alias lograph="git log --all --decorate --oneline --graph"
 alias gst="git status"
 alias gups="git pull origin main --rebase"
 alias bkup="backupBranch"
+alias gsia="git stash --include-untracked"
 
 alias undo="git reset HEAD~" # leaves changes of last commit in working area
 alias addToLast="git add . && git commit --amend --no-edit"
@@ -185,6 +186,17 @@ backupBranch() {
     colorPrint green  "Created a backup branch: ${currentBranch}_backup ✅"
 }
 
+function stashByName {
+    local stash_name="$1"
+    local include_untracked="$2"
+
+    if [[ "$include_untracked" == "--iu" || "$include_untracked" == "--include-untracked" ]]; then
+        git stash save "$stash_name" --include-untracked 
+    else
+        git stash save "$stash_name"
+    fi
+}
+
 
 gitGlider() {
   if [ -z "$1" ]; then
@@ -247,6 +259,10 @@ gitGlider() {
     colorPrint brightCyan "backupBranch:"
     colorPrint cyan "Duplicates your current branch appenging _backup to its name."
     colorPrint cyan "Usage: backupBranch"
+    echo
+    colorPrint brightCyan "stashByName:"
+    colorPrint cyan "Saves changes to the stash with a name."
+    colorPrint cyan "Usage: stashByName <stash_name> <optional --iu or --include-untracked>"
     echo
   else
     echo
