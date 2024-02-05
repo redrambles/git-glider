@@ -162,10 +162,10 @@ Creates a backup of your current branch without leaving your current branch
 
 ##### stashByName
 
-Saves changes to the stash with a name.
+Saves changes to the stash with a name. Includes untracked by default.
 
 ```sh
-stashByName <stash_name> <optional --iu or --include-untracked>
+stashByName <stash_name> <optional --no-untracked>
 ```
 
 #### applyStash

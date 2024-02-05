@@ -188,12 +188,12 @@ backupBranch() {
 
 function stashByName {
     local stash_name="$1"
-    local include_untracked="$2"
+    local exclude_untracked="$2"
 
-    if [[ "$include_untracked" == "--iu" || "$include_untracked" == "--include-untracked" ]]; then
-        git stash save "$stash_name" --include-untracked 
-    else
+    if [[ "$exclude_untracked" == "--no-untracked" ]]; then
         git stash save "$stash_name"
+    else
+        git stash save "$stash_name" --include-untracked 
     fi
 }
 
@@ -271,8 +271,8 @@ gitGlider() {
     colorPrint cyan "Usage: backupBranch"
     echo
     colorPrint brightCyan "stashByName:"
-    colorPrint cyan "Saves changes to the stash with a name."
-    colorPrint cyan "Usage: stashByName <stash_name> <optional --iu or --include-untracked>"
+    colorPrint cyan "Saves changes to the stash with a name. Includes untracked files by default."
+    colorPrint cyan "Usage: stashByName <stash_name> <optional --no-untracked>"
     echo
     colorPrint brightCyan "applyStash:"
     colorPrint cyan "Applied the stash by its saved name."
