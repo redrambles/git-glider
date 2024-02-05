@@ -12,7 +12,7 @@ alias lograph="git log --all --decorate --oneline --graph"
 alias gst="git status"
 alias gups="git pull origin main --rebase"
 alias bkup="backupBranch"
-alias gsia="git stash --include-untracked"
+alias gsiu="git stash --include-untracked"
 
 alias undo="git reset HEAD~" # leaves changes of last commit in working area
 alias addToLast="git add . && git commit --amend --no-edit"
