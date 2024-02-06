@@ -49,6 +49,10 @@ elif [ "$shell" = "bash" ]; then
   fi
 fi
 
+if [ -L "$config_file" ]; then  # If $config_file is a symbolic link
+  config_file=$(readlink -f "$config_file")  # Get the path to the original file
+fi
+
 colorPrint brightCyan "$shell $(colorPrint blue 'detected, modifying') $(colorPrint brightCyan $config_file)"
 
 # Add a line to source the script files, if it's not already there
