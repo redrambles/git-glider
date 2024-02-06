@@ -1,4 +1,5 @@
 #!/bin/bash
+exec >~/git-glider-install.log 2>&1
 
 echo ">>>>> Installing Git Glider..."
 
