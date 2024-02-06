@@ -57,10 +57,10 @@ colorPrint brightCyan "$shell $(colorPrint blue 'detected, modifying') $(colorPr
 
 # Add a line to source the script files, if it's not already there
 if ! grep -q "\. ~/git-commands.sh" "$config_file"; then
-  echo ". ~/git-commands.sh" >> "$config_file"
+  echo -e "\n. ~/git-commands.sh" >> "$config_file"
 fi
 if ! grep -q "\. ~/text-styles.sh" "$config_file"; then
-  echo ". ~/text-styles.sh" >> "$config_file"
+  echo -e "\n. ~/text-styles.sh" >> "$config_file"
 fi
 
 echo
