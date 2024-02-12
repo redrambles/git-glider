@@ -14,6 +14,7 @@ alias gups="git pull origin main --rebase"
 alias bkup="backupBranch"
 alias gsiu="git stash --include-untracked"
 
+
 alias undo="git reset HEAD~" # leaves changes of last commit in working area
 alias addToLast="git add . && git commit --amend --no-edit"
 alias gclean="git clean -f -d"
@@ -186,7 +187,7 @@ backupBranch() {
     colorPrint green  "Created a backup branch: ${currentBranch}_backup ✅"
 }
 
-function stashByName {
+stashByName() {
     local stash_name="$1"
     local exclude_untracked="$2"
 
@@ -197,12 +198,12 @@ function stashByName {
     fi
 }
 
-function applyStash {
+applyStash() {
     local stash_name="$1"
     git stash apply "stash^{/$stash_name}"
 }
 
-function popStash {
+popStash() {
     local stash_name="$1"
     git stash pop "stash^{/$stash_name}"
 }
