@@ -13,7 +13,7 @@ alias gst="git status"
 alias gups="git pull origin main --rebase"
 alias bkup="backupBranch"
 alias gsiu="git stash --include-untracked"
-
+alias affs="applyFileFromStash"
 
 alias undo="git reset HEAD~" # leaves changes of last commit in working area
 alias addToLast="git add . && git commit --amend --no-edit"
@@ -208,6 +208,49 @@ popStash() {
     git stash pop "stash^{/$stash_name}"
 }
 
+applyFileFromStash() {
+    local stashId
+    local filePath
+
+    # Parse arguments
+    while (( "$#" )); do
+        case "$1" in
+            --stash)
+                stashId=$2
+                shift 2
+                ;;
+            *)
+                filePath=$1
+                shift
+                ;;
+        esac
+    done
+
+    # Check if file path is provided
+    if [[ -z "$filePath" ]]; then
+        echo "Please provide a file path"
+        return 1
+    fi
+
+    # If stashId is provided, use it. Otherwise, use the most recent stash.
+    if [[ -z "$stashId" ]]; then
+        stashId=$(git stash list | awk -F: '{print $1}' | head -n 1)
+    fi
+
+    # Check if the file exists in the stash
+    if git show "$stashId:$filePath" > /dev/null 2>&1; then
+        # Get the file content from the stash
+        fileContent=$(git show "$stashId:$filePath")
+
+        # Apply the changes to the working area
+        echo "$fileContent" > "$filePath"
+        echo "Applied changes from $stashId to $filePath"
+        return 0
+    else
+        echo "The file does not exist in the specified stash"
+        return 1
+    fi
+}
 
 gitGlider() {
   if [ -z "$1" ]; then
