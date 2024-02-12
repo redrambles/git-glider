@@ -213,22 +213,23 @@ applyFileFromStash() {
     local filePath
 
     # Parse arguments
-    while (( "$#" )); do
-        case "$1" in
-            --stash)
-                stashId=$2
-                shift 2
-                ;;
-            *)
-                filePath=$1
-                shift
-                ;;
-        esac
+    for arg in "$@"
+    do
+        if [[ $arg == "--help" ]]; then
+            colorPrint brightCyan "Usage: " -n
+            colorPrint brightWhite "applyFileFromStash <path/to/file> --stash=<optional-stash-id>"
+            colorPrint cyan "Applies the changes from the given file to the working area. If no stash id is provided it will search the last stash"
+            return
+        elif [[ $arg == --stash* ]]; then
+            stashId="${arg#*=}"
+        else
+            filePath="$arg"
+        fi
     done
 
     # Check if file path is provided
     if [[ -z "$filePath" ]]; then
-        echo "Please provide a file path"
+        colorPrint brightRed "Please provide a file path"
         return 1
     fi
 
@@ -244,10 +245,10 @@ applyFileFromStash() {
 
         # Apply the changes to the working area
         echo "$fileContent" > "$filePath"
-        echo "Applied changes from $stashId to $filePath"
+        colorPrint brightGreen "Applied changes from $stashId to $filePath"
         return 0
     else
-        echo "The file does not exist in the specified stash"
+        colorPrint brightRed "The file does not exist in the specified stash"
         return 1
     fi
 }
