@@ -7,7 +7,7 @@ A collection of shell commands to streamline your Git workflow and maintain a cl
 Install with curl
 
 ```sh
-sh -c "$(curl -fsSL "https://raw.githubusercontent.com/krystalcampioni/git-glider/main/install.sh?$(date +%s)")"`
+sh -c "$(curl -fsSL "https://raw.githubusercontent.com/krystalcampioni/git-glider/main/install.sh?$(date +%s)")"
 ```
 
 or
