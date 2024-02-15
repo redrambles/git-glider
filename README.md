@@ -184,14 +184,14 @@ Pops the stash by its saved name.
 popStash <stash_name>
 ```
 
-#### applyFileFromStash
+#### fileFromStash
 
-**alias:** `affs`
+**alias:** `ffs`
 
-Applies the changes from the given file to the working area. If no stash id is provided it will search the last stash
+Finds the path to the file name provided and applies the changes to the working area. If no stash index is provided it will default to the last stash
 
 ```sh
-applyFileFromStash <path/to/file> --stash=<optional-stash-id>
+fileFromStash <filename> <optional-stash-id>
 ```
 
 ## Contributing

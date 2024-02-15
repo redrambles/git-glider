@@ -13,7 +13,7 @@ alias gst="git status"
 alias gups="git pull origin main --rebase"
 alias bkup="backupBranch"
 alias gsiu="git stash --include-untracked"
-alias affs="applyFileFromStash"
+alias ffs="fileFromStash"
 
 alias undo="git reset HEAD~" # leaves changes of last commit in working area
 alias addToLast="git add . && git commit --amend --no-edit"
@@ -208,47 +208,42 @@ popStash() {
     git stash pop "stash^{/$stash_name}"
 }
 
-applyFileFromStash() {
-    local stashId
-    local filePath
-
-    # Parse arguments
-    for arg in "$@"
-    do
-        if [[ $arg == "--help" ]]; then
-            colorPrint brightCyan "Usage: " -n
-            colorPrint brightWhite "applyFileFromStash <path/to/file> --stash=<optional-stash-id>"
-            colorPrint cyan "Applies the changes from the given file to the working area. If no stash id is provided it will search the last stash"
-            return
-        elif [[ $arg == --stash* ]]; then
-            stashId="${arg#*=}"
-        else
-            filePath="$arg"
-        fi
-    done
-
-    # Check if file path is provided
-    if [[ -z "$filePath" ]]; then
-        colorPrint brightRed "Please provide a file path"
+# Function to print usage
+fileFromStash() {
+    usage() {
+        colorPrint brightCyan "Usage: " -n
+        colorPrint brightWhite "fileFromStash <path/to/file> --stash=<optional-stash-id>"
+        colorPrint cyan "Applies the changes from the given file to the working area. If no stash id is provided it will search the last stash"
         return 1
+    }
+
+    # Check if at least one argument is provided
+    if [ $# -eq 0 ]; then
+        usage
+        return
     fi
 
-    # If stashId is provided, use it. Otherwise, use the most recent stash.
-    if [[ -z "$stashId" ]]; then
-        stashId=$(git stash list | awk -F: '{print $1}' | head -n 1)
+    # Check if --help is provided
+    if [ "$1" = "--help" ]; then
+        usage
+        return
+    fi
+
+    # Get the file name
+    local fileName=$1
+
+    # Get the stash index if provided, else default to 0
+    local stashIndex=0
+    if [[ $2 =~ --stash=([0-9]+) ]]; then
+        stashIndex=${BASH_REMATCH[1]}
     fi
 
     # Check if the file exists in the stash
-    if git show "$stashId:$filePath" > /dev/null 2>&1; then
-        # Get the file content from the stash
-        fileContent=$(git show "$stashId:$filePath")
-
-        # Apply the changes to the working area
-        echo "$fileContent" > "$filePath"
-        colorPrint brightGreen "Applied changes from $stashId to $filePath"
-        return 0
+    if git ls-tree stash@{$stashIndex} | grep -i $fileName > /dev/null; then
+        # Get the file from the stash and apply it to the working area
+        git checkout stash@{$stashIndex} -- $(git ls-tree -r stash@{$stashIndex} | grep -i $fileName | awk '{print $4}')
     else
-        colorPrint brightRed "The file does not exist in the specified stash"
+        echo "File '$fileName' not found in stash@{$stashIndex}"
         return 1
     fi
 }
@@ -327,6 +322,9 @@ gitGlider() {
     colorPrint cyan "Pops the stash by its saved name."
     colorPrint cyan "Usage: popStash <stash_name>"
     echo
+    colorPrint brightCyan "fileFromStash" -n
+    colorPrint cyan "fileFromStash <filename> <optional-stash-index>"
+    colorPrint cyan "Finds the path to the file name provided and applies the changes to the working area. If no stash index is provided it will default to the last stash"
   else
     echo
     colorPrint brightRed "Invalid argument. Use git-glider or git-glider --help."
